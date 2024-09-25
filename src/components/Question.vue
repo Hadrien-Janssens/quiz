@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import type { Question } from "./quiz.vue";
 
-const props = defineProps<{
+defineProps<{
   questions: Question[];
   progress: number;
 }>();
