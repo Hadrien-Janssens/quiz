@@ -5,8 +5,12 @@
       questionnaire.questions && progress !== questionnaire.questions.length
     "
   >
-    <Question :questions="questionnaire.questions" :progress="progress" />
-    <button @click="valideAndNext">Vallider</button>
+    <Question
+      :questions="questionnaire.questions"
+      :progress="progress"
+      @answerSelected="(answer) => (answerUser = answer)"
+    />
+    <button @click="valideAndNext">Valider</button>
   </div>
   <div v-else>Ton Score est de : {{ score }}/5</div>
 </template>
@@ -33,14 +37,12 @@ interface Questionnaire {
 const questionnaire = ref<Questionnaire>([]);
 
 onMounted(() => {
-  fetch("http://localhost:5173/src/db.json")
+  fetch("http://localhost:5174/src/db.json")
     .then((response) => response.json())
     .then((data) => (questionnaire.value = data));
 });
 
 const valideAndNext = () => {
-  //   console.log(answerUser.value);
-  //   console.log(questionnaire.value.questions[progress.value].correct_answer);
   if (
     answerUser.value ===
     questionnaire.value.questions[progress.value].correct_answer

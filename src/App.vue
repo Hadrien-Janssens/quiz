@@ -8,7 +8,6 @@ import Quiz from "./components/quiz.vue";
   </header>
 
   <main>
-    <h1>quizz</h1>
     <Quiz />
   </main>
 </template>

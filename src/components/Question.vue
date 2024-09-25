@@ -14,7 +14,12 @@
         v-for="(item, index) in questions[progress].choices"
         :key="index"
       >
-        <input type="radio" :name="questions[progress].question" id="" />
+        <input
+          type="radio"
+          :name="questions[progress].question"
+          id=""
+          @change="$emit('answerSelected', item)"
+        />
         {{ item }}
       </label>
     </div>
