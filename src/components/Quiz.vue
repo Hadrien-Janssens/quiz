@@ -5,6 +5,7 @@
       questionnaire.questions && progress !== questionnaire.questions.length
     "
   >
+    <progress value="2" max="5"></progress>
     <Question
       :questions="questionnaire.questions"
       :progress="progress"
@@ -49,6 +50,7 @@ const valideAndNext = () => {
   ) {
     score.value++;
   }
+  answerUser.value = "";
   progress.value++;
 };
 </script>

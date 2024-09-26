@@ -18,7 +18,8 @@
           type="radio"
           :name="questions[progress].question"
           id=""
-          @change="$emit('answerSelected', item)"
+          v-model="answer"
+          @change="answerSelected(item)"
         />
         {{ item }}
       </label>
@@ -27,10 +28,16 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import type { Question } from "./quiz.vue";
+
+const answer = ref<string>("");
 
 defineProps<{
   questions: Question[];
   progress: number;
 }>();
+
+const emit = defineEmits(["answerSelected"]);
+const answerSelected = (answer: string) => emit("answerSelected", answer);
 </script>
