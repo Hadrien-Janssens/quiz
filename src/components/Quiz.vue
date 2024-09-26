@@ -1,11 +1,11 @@
 <template>
   <h2>Questionnaire : {{ questionnaire.title }}</h2>
+  <Progress :value="progress" :max="questionnaire.questions.length"></Progress>
   <div
     v-if="
       questionnaire.questions && progress !== questionnaire.questions.length
     "
   >
-    <progress value="2" max="5"></progress>
     <Question
       :questions="questionnaire.questions"
       :progress="progress"
@@ -13,12 +13,16 @@
     />
     <button @click="valideAndNext">Valider</button>
   </div>
-  <div v-else>Ton Score est de : {{ score }}/5</div>
+  <article v-else>
+    <h6>Ton Score est de : {{ score }}/5 {{ score > 3 ? "🎉" : "🫣" }}</h6>
+    <button @click="refreshPage">Reset</button>
+  </article>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import Question from "./Question.vue";
+import Progress from "./Progress.vue";
 
 const progress = ref(0);
 const score = ref(0);
@@ -35,10 +39,13 @@ interface Questionnaire {
   questions: Question[];
 }
 
-const questionnaire = ref<Questionnaire>([]);
+const questionnaire = ref<Questionnaire>({
+  title: "",
+  questions: [],
+});
 
 onMounted(() => {
-  fetch("http://localhost:5174/src/db.json")
+  fetch("http://localhost:5173/src/db.json")
     .then((response) => response.json())
     .then((data) => (questionnaire.value = data));
 });
@@ -52,5 +59,9 @@ const valideAndNext = () => {
   }
   answerUser.value = "";
   progress.value++;
+};
+
+const refreshPage = () => {
+  location.reload();
 };
 </script>
