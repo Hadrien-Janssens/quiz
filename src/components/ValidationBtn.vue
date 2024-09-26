@@ -10,8 +10,8 @@ const props = defineProps<{
 }>();
 
 const valideAndNext = () => {
-  if (answerUser.value === props.correctAnswer) {
-    score.value++;
+  if (props.answerUser === props.correctAnswer) {
+    props.score++;
     console.log(score);
   }
   progress.value++;

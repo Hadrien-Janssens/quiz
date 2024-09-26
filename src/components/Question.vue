@@ -18,7 +18,6 @@
           type="radio"
           :name="questions[progress].question"
           :id="questions[progress].choices[index]"
-          v-model="answer"
           @change="answerSelected(item)"
         />
         {{ item }}
@@ -28,10 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import type { Question } from "./quiz.vue";
-
-const answer = ref<string>("");
 
 defineProps<{
   questions: Question[];
