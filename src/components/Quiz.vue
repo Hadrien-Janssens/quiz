@@ -18,6 +18,7 @@
         :questions="questionnaire.questions"
         :progress="progress"
         @answerSelected="(answer) => (answerUser = answer)"
+        @over-time="() => progress++"
       />
       <button :disabled="answerUser === ''" @click="valideAndNext">
         Valider

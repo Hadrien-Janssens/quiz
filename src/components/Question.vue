@@ -23,7 +23,10 @@
         {{ item }}
       </label>
     </article>
-    {{ counter }}
+    <article>
+      Temps restant :
+      {{ counter }} sec
+    </article>
   </div>
 </template>
 
@@ -37,21 +40,23 @@ const props = defineProps<{
   progress: number;
 }>();
 
+const emit = defineEmits(["answerSelected", "overTime"]);
+const answerSelected = (answer: string) => emit("answerSelected", answer);
+const overTime = () => emit("overTime");
+
+const counter = ref(10);
+
 const mixedArray = computed(() => {
   return randomizeArray(props.questions[props.progress].choices);
 });
 
-const emit = defineEmits(["answerSelected"]);
-const answerSelected = (answer: string) => emit("answerSelected", answer);
-
-const counter = ref(0);
-
-console.log(mixedArray.value);
-
 onMounted(() => {
   const interval = setInterval(() => {
-    counter.value++;
-    console.log(mixedArray.value);
+    counter.value--;
+    if (counter.value === 0) {
+      clearInterval(interval);
+      overTime();
+    }
   }, 1000);
 });
 </script>
